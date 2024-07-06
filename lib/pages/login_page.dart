@@ -82,17 +82,17 @@ class LoginPage extends StatelessWidget {
                           foregroundColor: Colors.white,
                           fixedSize: const Size.fromWidth(600)
                       ),
-                      child: const Text("Register", style: TextStyle(fontSize: 18),),
+                      child: const Text("Login", style: TextStyle(fontSize: 18),),
                     )
                   ],
                 ),
               ),
               const SizedBox(height: 60,),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.only(left: 45),
                 child: Row(children: [const Text("You do not have an account?",
                   style: TextStyle(fontSize: 15),), TextButton(onPressed: (){
-                    Navigator.pop(context);
+                  Navigator.pop(context);
                 }, child: const Text("Register"))],),
               )
             ],),

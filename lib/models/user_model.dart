@@ -37,10 +37,11 @@ Future<bool> login(String email, String password) async{
         'password': password,
       }));
 
+  //print("response: ${response.body}");
   if(response.statusCode == 200){
     var data = jsonDecode(response.body);
-    token = data['token'];
-    print(token);
+    token = data['access_token'];
+    print("my token is $token");
     return true;
   }else{
     return false;
@@ -57,13 +58,15 @@ Future<dynamic> getProfile() async {
     Uri.parse('http://10.0.2.2:8000/api/profile'),
     headers: {
       'Accept': 'application/json',
+      'Content-Type': 'application/json',
       'Authorization': 'Bearer $token',
     },
   );
 
   if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
-    return data;
+    print(data['data']);
+    return data['data'];
   } else {
     // Gestion des erreurs
     print('Failed to fetch profile: ${response.body}');

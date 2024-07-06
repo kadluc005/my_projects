@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:myprojects/models/user_model.dart';
 import 'package:myprojects/pages/login_page.dart';
 
@@ -139,9 +140,9 @@ class RegisterPage extends StatelessWidget {
               ),
               const SizedBox(height: 60,),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 45),
+                padding: const EdgeInsets.only(left: 55),
                 child: Row(children: [const Text("Already have an account?",
-                style: TextStyle(fontSize: 15),), TextButton(onPressed: (){
+                  style: TextStyle(fontSize: 15),), TextButton(onPressed: (){
                   Navigator.push(context, MaterialPageRoute(builder: (context)=>const LoginPage()));
                 }, child: const Text("Login"))],),
               )
