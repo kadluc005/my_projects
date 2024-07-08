@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myprojects/models/projects_model.dart';
 import 'package:myprojects/pages/create_project.dart';
 import 'package:myprojects/pages/project_detail_page.dart';
+import 'package:myprojects/pages/update_project.dart';
 
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({super.key});
@@ -75,9 +76,22 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             ),
                             subtitle:
                                 Text("Duration: ${_projects[index]['duree']}"),
-                            trailing: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.more_horiz),
+                            trailing: SizedBox(
+                              width: 100,
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const UpdateProject()));
+                                    },
+                                    icon: const Icon(Icons.edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(Icons.delete, color: Colors.red,),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

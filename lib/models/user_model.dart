@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 String? token;
-Future<bool> register(String name, String email, String phone, String password, String confirmPassword) async{
+Future<bool> register(String name,  String email, String phone, String password, String confirmPassword) async{
   final response = await http.post(Uri.parse('http://10.0.2.2:8000/api/register'),
     headers: {
       'Accept': 'application/json',

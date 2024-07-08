@@ -9,7 +9,8 @@ Future<bool> create_project(String name, int duree, String description) async {
     print('No token available. Please login first.');
     return false;
   }
-  final response = await http.post(Uri.parse("http://10.0.2.2:8000/api/creer_projet"),
+  final response = await http.post(
+    Uri.parse("http://10.0.2.2:8000/api/creer_projet"),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
@@ -29,33 +30,29 @@ Future<bool> create_project(String name, int duree, String description) async {
     print('Failed to create project: ${response.body}');
     return false;
   }
-
 }
 
-Future<List<Map<String, dynamic>>> getProjects () async {
-  if(token == null){
+Future<List<Map<String, dynamic>>> getProjects() async {
+  if (token == null) {
     //print('No token available. Please login first.');
     return Future.error("No token available. Please login first.");
   }
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/list_projets'),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer $token',
-    }
-  );
+  final response = await http
+      .get(Uri.parse('http://10.0.2.2:8000/api/list_projets'), headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer $token',
+  });
 
-  if(response.statusCode == 200){
+  if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
     //print(data['data']);
     //return data['data'];
     List<dynamic> projects = data['data'];
     return projects.map((project) => project as Map<String, dynamic>).toList();
-  }else{
+  } else {
     return Future.error("You don't have any project");
   }
-
-
 }
 
 Future<Map<String, dynamic>> getProjectDetails(int id) async {
@@ -76,28 +73,47 @@ Future<Map<String, dynamic>> getProjectDetails(int id) async {
   }
 }
 
-Future<List<Map<String, dynamic>>> updateProjects () async {
-  if(token == null){
-    //print('No token available. Please login first.');
-    return Future.error("No token available. Please login first.");
+Future<bool> updateProjects(int id, String name, int duree, String description) async {
+  if (token == null) {
+    print('No token available. Please login first.');
+    return false;
   }
-  final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/update_project'),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      }
+  final response = await http.post(
+    Uri.parse('http://10.0.2.2:8000/api/update_project/$id'),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+    body: jsonEncode({
+      'name': name,
+      'duree': duree,
+      'description': description,
+    }),
   );
 
-  if(response.statusCode == 200){
+  if (response.statusCode == 200) {
     var data = jsonDecode(response.body);
     //print(data['data']);
     //return data['data'];
     List<dynamic> projects = data['data'];
-    return projects.map((project) => project as Map<String, dynamic>).toList();
-  }else{
+    return true;
+  } else {
     return Future.error("You don't have any project");
   }
+}
 
-
+Future<bool> deleteProject(int id) async{
+  final response = await http.delete(Uri.parse('http://10.0.2.2:8000/api/delete_projet/$id'),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
+    },
+  );
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
 }
